@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>To-Do List</title>
+  <link rel="stylesheet" href="styles.css">
+  <style> 
+    body {
+        font-family: Arial, sans-serif; 
+        background-color: bisque;
+      }
+      
+      h1 {
+        text-align: center;
+      }
+      
+      .task-input {
+        text-align: center;
+        margin: 20px;
+      }
+      
+      .task-input input {
+        padding: 5px;
+        width: 300px;
+      }
+      
+      .task-lists {
+        display: flex;
+        justify-content: space-around;
+      }
+      
+      .pending-tasks,
+      .completed-tasks {
+        width: 45%;
+      }
+      
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      
+      li {
+        margin: 5px 0;
+        cursor: pointer;
+      }
+      
+      .completed-task {
+        text-decoration: line-through;
+      }
+  </style>
+</head>
+<body>
+  <h1>To-Do List</h1>
+  <div class="task-input">
+    <input type="text" id="taskInput" placeholder="Enter a new task">
+    <button onclick="addTask()">Add Task</button>
+  </div>
+  <div class="task-lists">
+    <div class="pending-tasks">
+      <h2>Pending Tasks</h2>
+      <ul id="pendingList">
+        <!-- Populate pending tasks dynamically using JavaScript -->
+      </ul>
+    </div>
+    <div class="completed-tasks">
+      <h2>Completed Tasks</h2>
+      <ul id="completedList">
+        <!-- Populate completed tasks dynamically using JavaScript -->
+      </ul>
+    </div>
+  </div>
+  <script> 
+    const pendingList = document.getElementById('pendingList');
+const completedList = document.getElementById('completedList');
+
+function addTask() {
+  const taskInput = document.getElementById('taskInput');
+  const taskText = taskInput.value;
+  if (taskText.trim() !== '') {
+    const task = createTaskElement(taskText);
+    pendingList.appendChild(task);
+    taskInput.value = '';
+  }
+}
+
+function createTaskElement(taskText) {
+  const taskElement = document.createElement('li');
+  taskElement.textContent = taskText;
+  taskElement.onclick = () => {
+    toggleTaskCompletion(taskElement);
+  };
+  return taskElement;
+}
+
+function toggleTaskCompletion(taskElement) {
+  if (taskElement.classList.contains('completed-task')) {
+    taskElement.classList.remove('completed-task');
+    completedList.removeChild(taskElement);
+    pendingList.appendChild(taskElement);
+  } else {
+    taskElement.classList.add('completed-task');
+    pendingList.removeChild(taskElement);
+    completedList.appendChild(taskElement);
+  }
+}
+
+// Function to populate tasks from local storage on page load
+function populateTasks() {
+  // Implement local storage retrieval and population here
+}
+
+// Call populateTasks on page load
+populateTasks();
+  </script>
+</body>
+</html>
